@@ -1,14 +1,30 @@
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
-
 import reflex as rx
-
 from rxconfig import config
 
 
-class State(rx.State):
-    """The app state."""
 
-    ...
+style = {
+    rx.heading: {
+        "font_family": "MoonPretty",
+        "font_weight": "500",
+        "font_size": "75px",
+        "color": "#8ba888",
+    },
+    rx.text: {
+        "font_family": "Monospace",
+        "font_size": "20px",
+        "color": "#44624a",
+    },
+    rx.container: {
+        "background_color": "#f1ebe1",
+    },
+    rx.button: {
+        "background_color": "#8ba888",
+        "font_family": "Monospace",
+    },
+}
+
+
 
 
 def index() -> rx.Component:
@@ -16,24 +32,29 @@ def index() -> rx.Component:
     return rx.container(
         rx.color_mode.button(position="top-right"),
         rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
+            rx.heading("Sustainable Scribbles"),
             rx.text(
-                "Get started by editing ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
-                size="5",
+                "Doodle with us, and Mr. Raccoon will guess your answer!"
             ),
-            rx.link(
-                rx.button("Check out our docs!"),
-                href="https://reflex.dev/docs/getting-started/introduction/",
-                is_external=True,
+            rx.button(
+                "PLAY →",
+                on_click=rx.redirect(
+                    "/directions"
+                ),
+                size="4",
             ),
             spacing="5",
             justify="center",
             min_height="85vh",
         ),
-        rx.logo(),
     )
 
 
-app = rx.App()
-app.add_page(index)
+app = rx.App(
+    style=style,
+    stylesheets=[
+        "/fonts/myfont.css",  # This path is relative to assets/
+    ]
+    )
+
+app.add_page(index, route="/")
